@@ -4,7 +4,7 @@ use lipsum::{lipsum, lipsum_words_with_rng};
 use rand::thread_rng;
 use std::{fmt::Write, thread::sleep, time::Duration};
 
-/// Generate some lorem-ipsum placeholder text.
+/// Lorem ipsum placeholder text generator.
 #[derive(Debug, Parser)]
 #[command(version)]
 struct Cli {

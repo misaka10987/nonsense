@@ -2,6 +2,14 @@
 name = "nonsense"
 version = "0.1.0"
 edition = "2024"
+authors = ["misaka10987 <misaka10987@outlook.com>"]
+description = "Lorem ipsum placeholder text generator"
+documentation = "https://github.com/misaka10987/nonsense"
+homepage = "https://github.com/misaka10987/nonsense"
+repository = "https://github.com/misaka10987/nonsense"
+readme = "README.md"
+keywords = ["lipsum", "lorem ipsum", "placeholder", "text generator", "cli"]
+license = "MIT"
 
 [dependencies]
 arboard = "3.6.1"
