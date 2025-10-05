@@ -4,3 +4,8 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+arboard = "3.6.1"
+clap = { version = "4.5.48", features = ["derive"] }
+lipsum = "0.9.1"
+# not using latest version for compatibility with upstream `lipsum`
+rand = "0.8.5"
