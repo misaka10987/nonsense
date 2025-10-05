@@ -15,10 +15,10 @@ struct Cli {
     #[arg(long, short, default_value_t = 64)]
     pub word: usize,
     /// Whether to add empty lines between paragraphs.
-    #[arg(long, short, default_value_t = true)]
+    #[arg(long, short, action = clap::ArgAction::Set, default_value_t = true)]
     pub newline: bool,
     /// Whether to copy the generated text to clipboard.
-    #[arg(long, short, default_value_t = true)]
+    #[arg(long, short, action = clap::ArgAction::Set, default_value_t = true)]
     pub clipboard: bool,
 }
 
