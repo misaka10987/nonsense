@@ -2,7 +2,7 @@ use arboard::Clipboard;
 use clap::Parser;
 use lipsum::{lipsum, lipsum_words_with_rng};
 use rand::thread_rng;
-use std::{fmt::Write, thread::sleep, time::Duration};
+use std::{borrow::Cow, fmt::Write, thread::sleep, time::Duration};
 
 /// Lorem ipsum placeholder text generator.
 #[derive(Debug, Parser)]
@@ -22,31 +22,35 @@ struct Cli {
     pub clipboard: bool,
 }
 
-fn main() {
-    let cli = Cli::parse();
+fn dummy_text(paragraph: usize, word: usize, newline: bool) -> String {
     let mut text = String::new();
-    for i in 0..cli.paragraph {
+    for i in 0..paragraph {
         let new = if i == 0 {
-            lipsum(cli.word)
+            lipsum(word)
         } else {
-            lipsum_words_with_rng(thread_rng(), cli.word)
+            lipsum_words_with_rng(thread_rng(), word)
         };
         writeln!(text, "{new}").unwrap();
-        if cli.newline {
+        if newline && i != paragraph - 1 {
             writeln!(text, "").unwrap();
         }
     }
-    if cli.newline {
-        print!("{text}");
-    } else {
-        println!("{text}");
-    }
-    if cli.clipboard {
-        if let Ok(mut clip) = Clipboard::new() {
-            if clip.set_text(text).is_ok() {
-                sleep(Duration::from_millis(1));
-                eprintln!("--- copied to clipboard ---")
-            }
-        }
+    text
+}
+
+fn add_to_clipboard<'a>(text: impl Into<Cow<'a, str>>) -> anyhow::Result<()> {
+    let mut clip = Clipboard::new()?;
+    clip.set_text(text)?;
+    sleep(Duration::from_millis(1));
+    Ok(())
+}
+
+fn main() {
+    let cli = Cli::parse();
+    let text = dummy_text(cli.paragraph, cli.word, cli.newline);
+    println!("{text}");
+    match add_to_clipboard(text) {
+        Ok(_) => eprintln!("--- copied to clipboard ---"),
+        Err(e) => eprintln!("--- {e}"),
     }
 }

@@ -12,6 +12,7 @@ keywords = ["lipsum", "lorem", "placeholder", "generator", "clipboard"]
 license = "MIT"
 
 [dependencies]
+anyhow = "1.0.100"
 arboard = "3.6.1"
 clap = { version = "4.5.48", features = ["derive"] }
 lipsum = "0.9.1"
