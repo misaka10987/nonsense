@@ -8,7 +8,7 @@ documentation = "https://github.com/misaka10987/nonsense"
 homepage = "https://github.com/misaka10987/nonsense"
 repository = "https://github.com/misaka10987/nonsense"
 readme = "README.md"
-keywords = ["lipsum", "lorem ipsum", "placeholder", "text generator", "cli"]
+keywords = ["lipsum", "placeholder", "text", "generator", "cli"]
 license = "MIT"
 
 [dependencies]
