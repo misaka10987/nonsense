@@ -1,6 +1,6 @@
 [package]
 name = "nonsense"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2024"
 authors = ["misaka10987 <misaka10987@outlook.com>"]
 description = "Lorem ipsum placeholder text generator with clipboard integration"
