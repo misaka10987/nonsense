@@ -2,7 +2,12 @@ use arboard::Clipboard;
 use clap::Parser;
 use lipsum::{lipsum, lipsum_title_with_rng, lipsum_words_with_rng};
 use rand::thread_rng;
-use std::{borrow::Cow, fmt::Write, thread::sleep, time::Duration};
+use std::{
+    borrow::Cow,
+    iter::{once, repeat_with},
+    thread::sleep,
+    time::Duration,
+};
 
 /// Lorem ipsum placeholder text generator.
 #[derive(Debug, Parser)]
@@ -26,19 +31,12 @@ struct Cli {
 }
 
 fn dummy_text(paragraph: usize, word: usize, newline: bool) -> String {
-    let mut text = String::new();
-    for i in 0..paragraph {
-        let new = if i == 0 {
-            lipsum(word)
-        } else {
-            lipsum_words_with_rng(thread_rng(), word)
-        };
-        writeln!(text, "{new}").unwrap();
-        if newline && i != paragraph - 1 {
-            writeln!(text, "").unwrap();
-        }
-    }
-    text
+    once(lipsum(word))
+        .chain(repeat_with(|| lipsum_words_with_rng(thread_rng(), word)))
+        .map(|p| format!("{p}\n"))
+        .take(paragraph)
+        .collect::<Vec<_>>()
+        .join(if newline { "\n" } else { "" })
 }
 
 fn dummy_title() -> String {
