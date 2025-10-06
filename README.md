@@ -17,8 +17,9 @@ Usage: nonsense [OPTIONS]
 Options:
   -p, --paragraph <PARAGRAPH>  Number of paragraphs to generate [default: 1]
   -w, --word <WORD>            Number of words per paragraph [default: 64]
-  -n, --newline                Whether to add empty lines between paragraphs
-  -c, --clipboard              Whether to copy the generated text to clipboard
+      --no-newline             Disable the empty lines between paragraphs
+      --no-clipboard           Disable clipboard addition integration
+  -t, --title                  Title generation mode
   -h, --help                   Print help
   -V, --version                Print version
 ```
