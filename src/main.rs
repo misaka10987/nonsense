@@ -14,12 +14,12 @@ struct Cli {
     /// Number of words per paragraph.
     #[arg(long, short, default_value_t = 64)]
     pub word: usize,
-    /// Whether to add empty lines between paragraphs.
-    #[arg(long, short, action = clap::ArgAction::Set, default_value_t = true)]
-    pub newline: bool,
-    /// Whether to copy the generated text to clipboard.
-    #[arg(long, short, action = clap::ArgAction::Set, default_value_t = true)]
-    pub clipboard: bool,
+    /// Disable the empty lines between paragraphs.
+    #[arg(long, default_value_t = false)]
+    pub no_newline: bool,
+    /// Disable clipboard addition integration.
+    #[arg(long, default_value_t = false)]
+    pub no_clipboard: bool,
 }
 
 fn dummy_text(paragraph: usize, word: usize, newline: bool) -> String {
@@ -47,10 +47,12 @@ fn add_to_clipboard<'a>(text: impl Into<Cow<'a, str>>) -> anyhow::Result<()> {
 
 fn main() {
     let cli = Cli::parse();
-    let text = dummy_text(cli.paragraph, cli.word, cli.newline);
+    let text = dummy_text(cli.paragraph, cli.word, !cli.no_newline);
     println!("{text}");
-    match add_to_clipboard(text) {
-        Ok(_) => eprintln!("--- copied to clipboard ---"),
-        Err(e) => eprintln!("--- {e}"),
+    if !cli.no_clipboard {
+        match add_to_clipboard(text) {
+            Ok(_) => eprintln!("--- copied to clipboard ---"),
+            Err(e) => eprintln!("--- {e}"),
+        }
     }
 }
